@@ -16,6 +16,7 @@ export default function PacManGame() {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const pacManRef = useRef<Position>({ x: 10, y: 10 });
   const directionRef = useRef<Direction>('RIGHT');
@@ -161,12 +162,12 @@ export default function PacManGame() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Clear canvas
-    ctx.fillStyle = '#E8F4F8';
+    // Clear canvas with theme-aware background
+    ctx.fillStyle = isDarkMode ? '#1a1a2e' : '#E8F4F8';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Draw dots
-    ctx.fillStyle = '#FF6B35';
+    // Draw dots with theme-aware color
+    ctx.fillStyle = isDarkMode ? '#FFD700' : '#FF6B35';
     for (let y = 0; y < GRID_SIZE; y++) {
       for (let x = 0; x < GRID_SIZE; x++) {
         if (dotsRef.current[y]?.[x]) {
@@ -308,10 +309,29 @@ export default function PacManGame() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col items-center justify-center p-4">
-      <div className="text-center mb-4">
-        <h1 className="text-4xl font-bold text-indigo-600 mb-2">PAC-MAN v2</h1>
-        <p className="text-gray-800 text-xl font-semibold">Score: {score}</p>
+    <div className={`min-h-screen flex flex-col items-center justify-center p-4 transition-colors duration-300 ${
+      isDarkMode 
+        ? 'bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900' 
+        : 'bg-gradient-to-br from-blue-50 to-indigo-100'
+    }`}>
+      <div className="text-center mb-4 relative">
+        <button
+          onClick={() => setIsDarkMode(!isDarkMode)}
+          className={`absolute -top-2 -right-16 p-2 rounded-lg transition-all duration-300 ${
+            isDarkMode 
+              ? 'bg-yellow-400 text-gray-900 hover:bg-yellow-300' 
+              : 'bg-indigo-600 text-white hover:bg-indigo-700'
+          }`}
+          aria-label="Toggle theme"
+        >
+          {isDarkMode ? '☀️' : '🌙'}
+        </button>
+        <h1 className={`text-4xl font-bold mb-2 transition-colors duration-300 ${
+          isDarkMode ? 'text-yellow-400' : 'text-indigo-600'
+        }`}>PAC-MAN v2</h1>
+        <p className={`text-xl font-semibold transition-colors duration-300 ${
+          isDarkMode ? 'text-gray-200' : 'text-gray-800'
+        }`}>Score: {score}</p>
       </div>
 
       <div className="relative shadow-2xl rounded-lg">
@@ -319,14 +339,22 @@ export default function PacManGame() {
           ref={canvasRef}
           width={GRID_SIZE * CELL_SIZE}
           height={GRID_SIZE * CELL_SIZE}
-          className="border-4 border-indigo-400 rounded-lg"
+          className={`border-4 rounded-lg transition-colors duration-300 ${
+            isDarkMode ? 'border-purple-500' : 'border-indigo-400'
+          }`}
         />
 
         {!gameStarted && (
-          <div className="absolute inset-0 flex items-center justify-center bg-white/90 rounded-lg">
+          <div className={`absolute inset-0 flex items-center justify-center rounded-lg transition-colors duration-300 ${
+            isDarkMode ? 'bg-gray-900/90' : 'bg-white/90'
+          }`}>
             <button
               onClick={startGame}
-              className="px-8 py-4 bg-indigo-600 text-white font-bold text-xl rounded-lg hover:bg-indigo-700 transition-colors shadow-lg"
+              className={`px-8 py-4 font-bold text-xl rounded-lg transition-colors shadow-lg ${
+                isDarkMode 
+                  ? 'bg-purple-600 text-white hover:bg-purple-700' 
+                  : 'bg-indigo-600 text-white hover:bg-indigo-700'
+              }`}
             >
               START GAME
             </button>
@@ -334,16 +362,26 @@ export default function PacManGame() {
         )}
 
         {gameOver && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/90 rounded-lg">
-            <p className="text-gray-800 text-2xl font-bold mb-4">
+          <div className={`absolute inset-0 flex flex-col items-center justify-center rounded-lg transition-colors duration-300 ${
+            isDarkMode ? 'bg-gray-900/90' : 'bg-white/90'
+          }`}>
+            <p className={`text-2xl font-bold mb-4 transition-colors duration-300 ${
+              isDarkMode ? 'text-yellow-400' : 'text-gray-800'
+            }`}>
               {dotsRef.current.every((row) => row.every((dot) => !dot))
                 ? 'YOU WIN!'
                 : 'GAME OVER!'}
             </p>
-            <p className="text-gray-700 text-xl mb-4">Final Score: {score}</p>
+            <p className={`text-xl mb-4 transition-colors duration-300 ${
+              isDarkMode ? 'text-gray-300' : 'text-gray-700'
+            }`}>Final Score: {score}</p>
             <button
               onClick={startGame}
-              className="px-8 py-4 bg-indigo-600 text-white font-bold text-xl rounded-lg hover:bg-indigo-700 transition-colors shadow-lg"
+              className={`px-8 py-4 font-bold text-xl rounded-lg transition-colors shadow-lg ${
+                isDarkMode 
+                  ? 'bg-purple-600 text-white hover:bg-purple-700' 
+                  : 'bg-indigo-600 text-white hover:bg-indigo-700'
+              }`}
             >
               PLAY AGAIN
             </button>
@@ -351,13 +389,25 @@ export default function PacManGame() {
         )}
       </div>
 
-      <div className="mt-4 text-gray-700 text-center">
+      <div className={`mt-4 text-center transition-colors duration-300 ${
+        isDarkMode ? 'text-gray-300' : 'text-gray-700'
+      }`}>
         <p className="text-sm font-medium">Use arrow keys to move</p>
-        <p className="text-xs text-gray-500 mt-2">Eat all dots and avoid ghosts!</p>
+        <p className={`text-xs mt-2 transition-colors duration-300 ${
+          isDarkMode ? 'text-gray-400' : 'text-gray-500'
+        }`}>Eat all dots and avoid ghosts!</p>
       </div>
     </div>
   );
 }
+
+
+
+
+
+
+
+
 
 
 
