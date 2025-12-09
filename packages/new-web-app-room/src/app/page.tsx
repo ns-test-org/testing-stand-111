@@ -163,7 +163,7 @@ export default function PacManGame() {
     if (!ctx) return;
 
     // Clear canvas with theme-aware background
-    ctx.fillStyle = isDarkMode ? '#1a1a2e' : '#E8F4F8';
+    ctx.fillStyle = isDarkMode ? '#000000' : '#E8F4F8';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Draw dots with theme-aware color
@@ -311,7 +311,7 @@ export default function PacManGame() {
   return (
     <div className={`min-h-screen flex flex-col items-center justify-center p-4 transition-colors duration-300 ${
       isDarkMode 
-        ? 'bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900' 
+        ? 'bg-black' 
         : 'bg-gradient-to-br from-blue-50 to-indigo-100'
     }`}>
       <div className="text-center mb-4 relative">
@@ -346,7 +346,7 @@ export default function PacManGame() {
 
         {!gameStarted && (
           <div className={`absolute inset-0 flex items-center justify-center rounded-lg transition-colors duration-300 ${
-            isDarkMode ? 'bg-gray-900/90' : 'bg-white/90'
+            isDarkMode ? 'bg-black/90' : 'bg-white/90'
           }`}>
             <button
               onClick={startGame}
@@ -363,7 +363,7 @@ export default function PacManGame() {
 
         {gameOver && (
           <div className={`absolute inset-0 flex flex-col items-center justify-center rounded-lg transition-colors duration-300 ${
-            isDarkMode ? 'bg-gray-900/90' : 'bg-white/90'
+            isDarkMode ? 'bg-black/90' : 'bg-white/90'
           }`}>
             <p className={`text-2xl font-bold mb-4 transition-colors duration-300 ${
               isDarkMode ? 'text-yellow-400' : 'text-gray-800'
@@ -400,6 +400,10 @@ export default function PacManGame() {
     </div>
   );
 }
+
+
+
+
 
 
 
