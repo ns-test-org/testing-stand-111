@@ -162,11 +162,11 @@ export default function PacManGame() {
     if (!ctx) return;
 
     // Clear canvas
-    ctx.fillStyle = '#000000';
+    ctx.fillStyle = '#E8F4F8';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Draw dots
-    ctx.fillStyle = '#FFB852';
+    ctx.fillStyle = '#FF6B35';
     for (let y = 0; y < GRID_SIZE; y++) {
       for (let x = 0; x < GRID_SIZE; x++) {
         if (dotsRef.current[y]?.[x]) {
@@ -185,7 +185,7 @@ export default function PacManGame() {
 
     // Draw Pac-Man
     const pacMan = pacManRef.current;
-    ctx.fillStyle = '#FFFF00';
+    ctx.fillStyle = '#FFD700';
     ctx.beginPath();
     
     let startAngle = 0;
@@ -308,25 +308,25 @@ export default function PacManGame() {
   };
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col items-center justify-center p-4">
       <div className="text-center mb-4">
-        <h1 className="text-4xl font-bold text-yellow-400 mb-2">PAC-MAN</h1>
-        <p className="text-white text-xl">Score: {score}</p>
+        <h1 className="text-4xl font-bold text-indigo-600 mb-2">PAC-MAN</h1>
+        <p className="text-gray-800 text-xl font-semibold">Score: {score}</p>
       </div>
 
-      <div className="relative">
+      <div className="relative shadow-2xl rounded-lg">
         <canvas
           ref={canvasRef}
           width={GRID_SIZE * CELL_SIZE}
           height={GRID_SIZE * CELL_SIZE}
-          className="border-4 border-blue-600 rounded-lg"
+          className="border-4 border-indigo-400 rounded-lg"
         />
 
         {!gameStarted && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/80 rounded-lg">
+          <div className="absolute inset-0 flex items-center justify-center bg-white/90 rounded-lg">
             <button
               onClick={startGame}
-              className="px-8 py-4 bg-yellow-400 text-black font-bold text-xl rounded-lg hover:bg-yellow-300 transition-colors"
+              className="px-8 py-4 bg-indigo-600 text-white font-bold text-xl rounded-lg hover:bg-indigo-700 transition-colors shadow-lg"
             >
               START GAME
             </button>
@@ -334,16 +334,16 @@ export default function PacManGame() {
         )}
 
         {gameOver && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 rounded-lg">
-            <p className="text-white text-2xl mb-4">
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/90 rounded-lg">
+            <p className="text-gray-800 text-2xl font-bold mb-4">
               {dotsRef.current.every((row) => row.every((dot) => !dot))
                 ? 'YOU WIN!'
                 : 'GAME OVER!'}
             </p>
-            <p className="text-white text-xl mb-4">Final Score: {score}</p>
+            <p className="text-gray-700 text-xl mb-4">Final Score: {score}</p>
             <button
               onClick={startGame}
-              className="px-8 py-4 bg-yellow-400 text-black font-bold text-xl rounded-lg hover:bg-yellow-300 transition-colors"
+              className="px-8 py-4 bg-indigo-600 text-white font-bold text-xl rounded-lg hover:bg-indigo-700 transition-colors shadow-lg"
             >
               PLAY AGAIN
             </button>
@@ -351,11 +351,15 @@ export default function PacManGame() {
         )}
       </div>
 
-      <div className="mt-4 text-white text-center">
-        <p className="text-sm">Use arrow keys to move</p>
-        <p className="text-xs text-gray-400 mt-2">Eat all dots and avoid ghosts!</p>
+      <div className="mt-4 text-gray-700 text-center">
+        <p className="text-sm font-medium">Use arrow keys to move</p>
+        <p className="text-xs text-gray-500 mt-2">Eat all dots and avoid ghosts!</p>
       </div>
     </div>
   );
 }
+
+
+
+
 
