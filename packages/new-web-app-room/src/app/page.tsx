@@ -328,7 +328,7 @@ export default function PacManGame() {
         </button>
         <h1 className={`text-4xl font-bold mb-2 transition-colors duration-300 ${
           isDarkMode ? 'text-yellow-400' : 'text-indigo-600'
-        }`}>PAC-MAN v2</h1>
+        }`}>PAC-MAN v3</h1>
         <p className={`text-xl font-semibold transition-colors duration-300 ${
           isDarkMode ? 'text-gray-200' : 'text-gray-800'
         }`}>Score: {score}</p>
@@ -400,6 +400,7 @@ export default function PacManGame() {
     </div>
   );
 }
+
 
 
 
